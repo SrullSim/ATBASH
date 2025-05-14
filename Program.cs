@@ -45,10 +45,27 @@
             return ("", 0);
         }
 
-        //Sends alert based on assessment
-        static string WarningAlert(string input)
+        //Assessment of alert level
+        static string WarningAlert(int input)
         {
-            return "";
+            switch (input)
+            {
+                case 0:
+                    return "Safe message";
+                    break;
+                case < 6:
+                    return "WARNING";
+                    break;
+                case < 11:
+                    return "DANGER!";
+                    break;
+                case < 16:
+                    return "ULTRA ALERT!";
+                    break;
+                default:
+                    return "JUST GET TO THE BOMB SHELTER";
+                    break;
+            }
         }
 
 
