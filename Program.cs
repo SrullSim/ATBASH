@@ -1,11 +1,30 @@
-﻿namespace atbash
+﻿using System.Net.Sockets;
+using System.Text.RegularExpressions;
+using static System.Net.Mime.MediaTypeNames;
+
+namespace atbash
 {
-    internal class Program
+    class Program
     {
+
+
+
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
-            
+            List<string> list = new List<string>{
+                "nukhba" , "fighter", "rocket", "secret"
+            };
+            Console.WriteLine(run_all("Lfi ulixvh ziv kivkzirmt uli z nzqli zggzxp lm gsv Arlmrhg vmvnb.\r\nGsv ilxpvg fmrgh ziv ivzwb zmw dzrgrmt uli gsv hrtmzo.\r\nYlnyh szev yvvm kozxvw mvzi pvb olxzgrlmh.\r\nMfpsyz urtsgvih ziv hgzmwrmt yb uli tilfmw rmurogizgrlm.\r\nGsv zggzxp droo yv hfwwvm zmw hgilmt -- gsvb dlm’g hvv rg xlnrmt.\r\nDv nfhg hgzb srwwvm zmw pvvk gsv kozm hvxivg fmgro gsv ozhg nlnvmg.\r\nErxglib rh mvzi. Hgzb ivzwb.", list));
+        }
+
+        static string run_all(string input, List<string> dengrusWords)
+        {
+            string decryptedText = decrypt(input);
+
+            int threatLavel = LooksDangerousWords(decryptedText, dengrusWords);
+
+            return $" {WarningAlert(threatLavel)},\n {decryptedText}";
+
         }
 
 
@@ -13,21 +32,75 @@
         //     decrypted the text
         static string decrypt(string input)
         {
-            return "";
+            Dictionary<char, char> atbash = new Dictionary<char, char>();
+
+            for (char c = 'a'; c <= 'z'; c++)
+            {
+                atbash[c] = (char)('z' - (c - 'a'));
+            }
+            for (char c = 'A'; c <= 'Z'; c++)
+            {
+                atbash[c] = (char)('Z' - (c - 'A'));
+            }
+            string messageDecrypted = "";
+
+            foreach (char c in input)
+            {
+                if (atbash.ContainsKey(c))
+                {
+                    messageDecrypted += atbash[c];
+                }
+                else
+                {
+                    messageDecrypted += c;
+                }
+            }
+            return messageDecrypted;
         }
 
         //checked for dangerous words in the text
-        static (string , int) LooksDangerousWords(string input)
+        static int LooksDangerousWords(string input, List<string> dengrusWords)
         {
-            return ("",0);
+            char[] delimiterChars = [' ', ',', '.', ':', '-'];
+
+            int points = 0;
+            List<string> listwords = input.Split(delimiterChars).ToList();
+
+
+            for (int i = 0; i < listwords.Count; i++)
+            {
+                if (dengrusWords.Contains(listwords[i]))
+                {
+                    points++;
+                }
+            }
+
+
+            return (points);
         }
 
-        //Sends alert based on assessment
-        static string WarningAlert(string input)
+        //Assessment of alert level
+        static string WarningAlert(int input)
         {
-            return "";
-        }
+            switch (input)
+            {
+                case 0:
+                    return "Safe message";
 
+                case < 6:
+                    return "WARNING";
+
+                case < 11:
+                    return "DANGER!";
+                    ;
+                case < 16:
+                    return "ULTRA ALERT!";
+
+                default:
+                    return "JUST GET TO THE BOMB SHELTER";
+
+            }
+        }
 
     }
 }
