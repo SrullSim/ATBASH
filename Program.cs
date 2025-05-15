@@ -1,12 +1,31 @@
 ﻿using System.Net.Sockets;
 using System.Text.RegularExpressions;
+using static System.Net.Mime.MediaTypeNames;
+
 
 namespace atbash
 {
     class Program
     {
+
+
+
         static void Main(string[] args)
         {
+            List<string> list = new List<string>{
+                "nukhba" , "fighter", "rocket", "secret"
+            };
+            Console.WriteLine(run_all("Lfi ulixvh ziv kivkzirmt uli z nzqli zggzxp lm gsv Arlmrhg vmvnb.\r\nGsv ilxpvg fmrgh ziv ivzwb zmw dzrgrmt uli gsv hrtmzo.\r\nYlnyh szev yvvm kozxvw mvzi pvb olxzgrlmh.\r\nMfpsyz urtsgvih ziv hgzmwrmt yb uli tilfmw rmurogizgrlm.\r\nGsv zggzxp droo yv hfwwvm zmw hgilmt -- gsvb dlm’g hvv rg xlnrmt.\r\nDv nfhg hgzb srwwvm zmw pvvk gsv kozm hvxivg fmgro gsv ozhg nlnvmg.\r\nErxglib rh mvzi. Hgzb ivzwb.", list));
+        }
+
+        static string run_all(string input, List<string> dengrusWords)
+        {
+            string decryptedText = decrypt(input);
+
+            int threatLavel = LooksDangerousWords(decryptedText, dengrusWords);
+
+            return $" {WarningAlert(threatLavel)},\n {decryptedText}";
+
 
         }
 
@@ -69,19 +88,19 @@ namespace atbash
             {
                 case 0:
                     return "Safe message";
-                    break;
+
                 case < 6:
                     return "WARNING";
-                    break;
+
                 case < 11:
                     return "DANGER!";
-                    break;
+                    ;
                 case < 16:
                     return "ULTRA ALERT!";
-                    break;
+
                 default:
                     return "JUST GET TO THE BOMB SHELTER";
-                    break;
+
             }
         }
 
