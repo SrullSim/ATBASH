@@ -1,9 +1,13 @@
-﻿namespace atbash
+﻿using System.Net.Sockets;
+using System.Text.RegularExpressions;
+
+namespace atbash
 {
     class Program
     {
         static void Main(string[] args)
         {
+
         }
 
 
@@ -12,7 +16,7 @@
         static string decrypt(string input)
         {
             Dictionary<char, char> atbash = new Dictionary<char, char>();
-           
+
             for (char c = 'a'; c <= 'z'; c++)
             {
                 atbash[c] = (char)('z' - (c - 'a'));
@@ -22,7 +26,7 @@
                 atbash[c] = (char)('Z' - (c - 'A'));
             }
             string messageDecrypted = "";
-            
+
             foreach (char c in input)
             {
                 if (atbash.ContainsKey(c))
@@ -38,13 +42,15 @@
         }
 
         //checked for dangerous words in the text
-        static int LooksDangerousWords(string input,List<string> dengrusWords)
+        static int LooksDangerousWords(string input, List<string> dengrusWords)
         {
+            char[] delimiterChars = [' ', ',', '.', ':', '-'];
+
             int points = 0;
-            List<string> listwords = input.Split(' ').ToList();
+            List<string> listwords = input.Split(delimiterChars).ToList();
 
 
-            for (int i = 0; i < listwords.Count;  i++)
+            for (int i = 0; i < listwords.Count; i++)
             {
                 if (dengrusWords.Contains(listwords[i]))
                 {
@@ -54,7 +60,7 @@
 
 
             return (points);
-
+        }
 
         //Assessment of alert level
         static string WarningAlert(int input)
@@ -78,5 +84,6 @@
                     break;
             }
         }
+
     }
 }
