@@ -18,20 +18,20 @@ namespace atbash
             Console.WriteLine(run_all("Lfi ulixvh ziv kivkzirmt uli z nzqli zggzxp lm gsv Arlmrhg vmvnb.\r\nGsv ilxpvg fmrgh ziv ivzwb zmw dzrgrmt uli gsv hrtmzo.\r\nYlnyh szev yvvm kozxvw mvzi pvb olxzgrlmh.\r\nMfpsyz urtsgvih ziv hgzmwrmt yb uli tilfmw rmurogizgrlm.\r\nGsv zggzxp droo yv hfwwvm zmw hgilmt -- gsvb dlm’g hvv rg xlnrmt.\r\nDv nfhg hgzb srwwvm zmw pvvk gsv kozm hvxivg fmgro gsv ozhg nlnvmg.\r\nErxglib rh mvzi. Hgzb ivzwb.", list));
         }
 
-        static string run_all(string input, List<string> dengrusWords)
+        static string run_all(string input, List<string> dangerousWords)
         {
             string decryptedText = decrypt(input);
 
-            int threatLavel = LooksDangerousWords(decryptedText, dengrusWords);
+            int threatLevel = LooksDangerousWords(decryptedText, dangerousWords);
 
-            return $" {WarningAlert(threatLavel)},\n {decryptedText}";
+            return $" {WarningAlert(threatLevel)},\n {decryptedText}";
 
 
         }
 
 
 
-        //     decrypted the text
+        //     decrypt the text
         static string decrypt(string input)
         {
             Dictionary<char, char> atbash = new Dictionary<char, char>();
@@ -60,8 +60,8 @@ namespace atbash
             return messageDecrypted;
         }
 
-        //checked for dangerous words in the text
-        static int LooksDangerousWords(string input, List<string> dengrusWords)
+        //check for dangerous words in the text
+        static int LooksDangerousWords(string input, List<string> dangerousWords)
         {
             char[] delimiterChars = [' ', ',', '.', ':', '-'];
 
@@ -71,7 +71,7 @@ namespace atbash
 
             for (int i = 0; i < listwords.Count; i++)
             {
-                if (dengrusWords.Contains(listwords[i]))
+                if (dangerousWords.Contains(listwords[i]))
                 {
                     points++;
                 }
